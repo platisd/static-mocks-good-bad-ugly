@@ -28,23 +28,32 @@ add_subdirectory(external)
 enable_testing()
 
 # Gyroscope #####
+add_library(gyroscope_api INTERFACE)
+target_include_directories(gyroscope_api INTERFACE include/gyroscope)
+
 add_library(gyroscope src/gyroscope.cpp)
-target_include_directories(gyroscope PUBLIC include/gyroscope)
+target_link_libraries(gyroscope PUBLIC gyroscope_api)
 
 # Logger #####
+add_library(logger_api INTERFACE)
+target_include_directories(logger_api INTERFACE include/logger)
+
 add_library(logger src/logger.cpp)
-target_include_directories(logger PUBLIC include/logger)
+target_link_libraries(logger PUBLIC logger_api)
 
 # Odometer #####
+add_library(odometer_api INTERFACE)
+target_include_directories(odometer_api INTERFACE include/odometer)
+
 add_library(odometer src/odometer.cpp)
-target_include_directories(odometer PUBLIC include/odometer)
+target_link_libraries(odometer PUBLIC odometer_api)
 
 # Cool car #####
 add_library(cool_car src/cool_car.cpp)
 target_include_directories(cool_car PUBLIC include/cool_car)
-target_link_libraries(cool_car PUBLIC gyroscope logger odometer)
+target_link_libraries(cool_car PUBLIC gyroscope_api logger_api odometer_api)
 
 add_executable(cool_car_main src/cool_car_main.cpp)
-target_link_libraries(cool_car_main PUBLIC cool_car)
+target_link_libraries(cool_car_main PUBLIC cool_car gyroscope logger odometer)
 
 add_subdirectory(test)
