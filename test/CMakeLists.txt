@@ -1,4 +1,4 @@
-# Dummy test
-add_executable(dummy_test DummyTest.cpp)
-# target_link_libraries(dummy_test dummy)
-configure_test(dummy_test)
+add_executable(cool_car_test cool_car_test.cpp)
+target_include_directories(cool_car_test PUBLIC mocks)
+target_link_libraries(cool_car_test cool_car)
+configure_test(cool_car_test)
